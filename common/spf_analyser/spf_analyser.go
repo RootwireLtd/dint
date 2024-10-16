@@ -5,17 +5,17 @@ import (
 	"strings"
 )
 
-// spfTestResults struct to hold the results of each SPF check
-type spfTestResults struct {
+// SpfTestResults struct to hold the results of each SPF check
+type SpfTestResults struct {
 	AllTestsPassed    bool
 	RecordFound       bool
 	SingleRecord      bool
 	QualifierHardFail bool
 }
 
-func CheckSPFRecord(records []string) (spfTestResults, string) {
+func CheckSPFRecord(records []string) (SpfTestResults, string) {
 	// Initialize the struct to hold the results
-	results := spfTestResults{
+	results := SpfTestResults{
 		AllTestsPassed:    false,
 		RecordFound:       false,
 		SingleRecord:      len(records) == 1,

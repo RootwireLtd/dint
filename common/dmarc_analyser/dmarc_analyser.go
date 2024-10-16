@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// dmarcTestResults struct to hold the results of each DMARC check
-type dmarcTestResults struct {
+// DmarcTestResults struct to hold the results of each DMARC check
+type DmarcTestResults struct {
 	AllTestsPassed        bool
 	RecordFound           bool
 	SingleRecord          bool
@@ -16,9 +16,9 @@ type dmarcTestResults struct {
 	PctValid              bool
 }
 
-func CheckDMARCRecord(records []string) (dmarcTestResults, string) {
+func CheckDMARCRecord(records []string) (DmarcTestResults, string) {
 	// Initialize the struct to hold the results
-	results := dmarcTestResults{
+	results := DmarcTestResults{
 		AllTestsPassed:        false,
 		RecordFound:           false,
 		SingleRecord:          len(records) == 1,
