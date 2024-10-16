@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/RootwireLtd/dint/common/dmarc_analyser"
-	"github.com/RootwireLtd/dint/common/dns_resolver"
-	"github.com/RootwireLtd/dint/common/spf_analyser"
+	"github.com/rootwireltd/dint/common/dmarc_analyser"
+	"github.com/rootwireltd/dint/common/dns_resolver"
+	"github.com/rootwireltd/dint/common/spf_analyser"
 	"log"
 	"os"
 	"strings"
