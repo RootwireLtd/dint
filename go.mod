@@ -1,4 +1,4 @@
-module github.com/RootwireLtd/dint
+module github.com/rootwireltd/dint
 
 go 1.23.1
 
