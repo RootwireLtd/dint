@@ -3,39 +3,48 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/jedib0t/go-pretty/v6/table"
+	"github.com/logrusorgru/aurora"
 	"github.com/rootwireltd/dint/common/dmarc_analyser"
 	"github.com/rootwireltd/dint/common/dns_resolver"
 	"github.com/rootwireltd/dint/common/spf_analyser"
 	"log"
-	"os"
 	"strings"
-	"text/tabwriter"
 )
 
 //TIP To run your code, right-click the code and select <b>Run</b>. Alternatively, click
 // the <icon src="AllIcons.Actions.Execute"/> icon in the gutter and select the <b>Run</b> menu item from here.
 
-func DisplaySummary(domain string, spfTestPass, dmardTestPass, dkimTestPass bool) {
-	spfStatus := "FAIL"
-	dmarcStatus := "FAIL"
-	dkimStatus := "FAIL"
+func DisplaySummary(domain string, spfTestPass, dmarcTestPass, dkimTestPass bool) {
+	spfStatus := aurora.Red("FAIL").String()
+	dmarcStatus := aurora.Red("FAIL").String()
+	dkimStatus := aurora.Red("FAIL").String()
 
 	if spfTestPass {
-		spfStatus = "PASS"
+		spfStatus = aurora.Green("PASS").String()
 	}
-	if dmardTestPass {
-		dmarcStatus = "PASS"
+	if dmarcTestPass {
+		dmarcStatus = aurora.Green("PASS").String()
 	}
 	if dkimTestPass {
-		dkimStatus = "PASS"
+		dkimStatus = aurora.Green("PASS").String()
 	}
 
-	w := tabwriter.NewWriter(os.Stdout, 5, 0, 1, ' ', tabwriter.Debug)
+	var (
+		colTitleDomain = "Domain"
+		colTitleSPF    = "SPF"
+		colTitleDMARC  = "DMARC"
+		colTitleDKIM   = "DKIM"
+		rowHeader      = table.Row{colTitleDomain, colTitleSPF, colTitleDMARC, colTitleDKIM}
+	)
 
-	// Print the table header and result row
-	fmt.Fprintf(w, "%v\t%v\t%v\t%v\t\n", "Domain", "SPF", "DMARC", "DKIM")
-	fmt.Fprintf(w, "%v\t%v\t%v\t%v\t\n", domain, spfStatus, dmarcStatus, dkimStatus)
-	w.Flush()
+	var domainRow = table.Row{domain, spfStatus, dmarcStatus, dkimStatus}
+
+	tw := table.NewWriter()
+	tw.AppendHeader(rowHeader)
+	tw.AppendRow(domainRow)
+
+	fmt.Println(tw.Render())
 }
 
 func main() {
