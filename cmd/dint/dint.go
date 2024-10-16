@@ -73,8 +73,7 @@ func main() {
 	spfTestResults, spfSummary := spf_analyser.CheckSPFRecord(spfRecords)
 
 	// Fetch DMARC Records
-	dmarcDomain := "_dmarc." + *domain
-	dmarcRecords, err := dns_resolver.LookupDNSRecords("TXT", dmarcDomain)
+	dmarcRecords, err := dns_resolver.LookupDMARCRecords(*domain)
 	if err != nil {
 		log.Fatalf("Error fetching DMARC records: %v", err)
 	}
@@ -114,7 +113,7 @@ func main() {
 
 	// Summarize results
 	fmt.Println("\nTest Results:")
-	fmt.Printf("1. SPF Record is present: %v\n", spfTestResults)
+	fmt.Printf("1. SPF Record is present: %v\n", spfTestResults.RecordFound)
 	fmt.Printf("2. SPF Record is a single record: %v\n", len(spfRecords) == 1)
 	fmt.Printf("3. SPF Record has a Hard Fail Qualifier: %v\n", strings.Contains(spfSummary, "Hard fail qualifier: true"))
 	fmt.Printf("4. DMARC Record is present: %v\n", dmarcTestResults.RecordFound)
